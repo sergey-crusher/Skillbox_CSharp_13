@@ -35,7 +35,7 @@ namespace Lesson_13
             if (ComboBoxAcc1.SelectedValue.ToString() != ComboBoxAcc2.SelectedValue.ToString() ||
                 ComboBoxCl1.SelectedItem != ComboBoxCl2.SelectedItem)
             {
-                MainWindow.transfer.Post(
+                MainWindow.clients.Transfer(
                     (Account)clients.First(x => x == (Client)ComboBoxCl1.SelectedItem).Accounts.First(x => x.Number.ToString() == ComboBoxAcc1.Text),
                     (Account)clients.First(x => x == (Client)ComboBoxCl2.SelectedItem).Accounts.First(x => x.Number.ToString() == ComboBoxAcc2.Text),
                     decimal.Parse(TextBoxSum.Text)

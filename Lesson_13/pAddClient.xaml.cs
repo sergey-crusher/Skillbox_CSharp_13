@@ -1,6 +1,7 @@
 ﻿using Lesson_13.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -12,32 +13,18 @@ namespace Lesson_13
     /// </summary>
     public partial class pAddClient : Page
     {
-        private List<string> FullName = new List<string>()
-        {
-            "Куликова Анна Александровна",
-            "Тихонова Полина Ильинична",
-            "Демин Андрей Данилович",
-            "Гаврилова Дарья Ярославовна",
-            "Никулина Виктория Степановна",
-            "Николаева Елена Артемьевна",
-            "Семенов Семён Андреевич",
-            "Карпова Стефания Ивановна",
-            "Попов Артур Борисович",
-            "Князева Олеся Егоровна",
-            "Панин Лука Степанович",
-            "Рожков Михаил Демидович",
-            "Фролов Михаил Иванович",
-            "Седова Ясмина Мироновна",
-            "Давыдов Дмитрий Сергеевич",
-            "Власов Олег Иванович",
-            "Ларионов Максим Георгиевич",
-            "Васильева Анастасия Ярославовна",
-            "Широкова Агата Георгиевна",
-            "Рыжов Илья Тимофеевич",
-        };
+        private List<string> FullName = new List<string>();
+
         public pAddClient()
         {
             InitializeComponent();
+
+            // Наполнение коллекции возможными ФИО
+            var file = File.ReadAllLines("./people.txt");
+            foreach(var line in file)
+            {
+                FullName.Add(line);
+            }
         }
 
         private void ButtonGeneration(object sender, RoutedEventArgs e)

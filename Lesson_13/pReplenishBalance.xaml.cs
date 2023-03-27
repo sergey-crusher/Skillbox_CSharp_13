@@ -32,9 +32,7 @@ namespace Lesson_13
             decimal sum;
             if (decimal.TryParse(TextBoxSum.Text, out sum))
             {
-                (MainWindow.clients.First(x => x.INN == MainWindow.CurrentClientINN).Accounts)
-                    .First(x => x.Number == MainWindow.CurrentAccountNumber)
-                    .ReplenishBalance(decimal.Parse(TextBoxSum.Text));
+                MainWindow.clients.ReplenishBalance(decimal.Parse(TextBoxSum.Text));
             }
             else
             {

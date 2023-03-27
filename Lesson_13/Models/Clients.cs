@@ -72,7 +72,7 @@ namespace Lesson_13.Models
             }
             else
             {
-                Notify?.Invoke($"Клиент с таким ИНН уже существует");
+                MessageBox.Show($"Клиент с таким ИНН уже существует");
             }
         }
 
@@ -149,6 +149,33 @@ namespace Lesson_13.Models
         }
 
         /// <summary>
+        /// Пополнение счёта
+        /// </summary>
+        /// <param name="sum">Сумма пополнения</param>
+        public void ReplenishBalance(decimal sum)
+        {
+            if (FindClient(MainWindow.CurrentClientINN))
+            {
+                Client client = this.First(x => x.INN == MainWindow.CurrentClientINN);
+                Account account = (Account)client.Accounts.First(x => x.Number == MainWindow.CurrentAccountNumber);
+                account.ReplenishBalance(sum);
+                Notify?.Invoke($"Вы пополнили счёт {MainWindow.CurrentAccountNumber} на сумму {sum}");
+            }
+        }
+
+        /// <summary>
+        /// Перевод между счетами
+        /// </summary>
+        /// <param name="acc_out">Счёт с которого переводится</param>
+        /// <param name="acc_in">Счёт на который переводится</param>
+        /// <param name="sum">Сумма перевода</param>
+        public void Transfer(Account acc_out, Account acc_in, decimal sum)
+        {
+            MainWindow.transfer.Post(acc_out, acc_in, sum);
+            Notify?.Invoke($"Перевод со счёта {acc_out.Number} на {acc_in.Number} на сумму {sum}");
+        }
+
+        /// <summary>
         /// Поиск клиента по ИНН
         /// </summary>
         /// <param name="INN">ИНН</param>
@@ -163,7 +190,7 @@ namespace Lesson_13.Models
             {
                 if (MessageShow)
                 {
-                    Notify?.Invoke($"Клиент с ИНН: \"{INN}\" не найден!");
+                    MessageBox.Show($"Клиент с ИНН: \"{INN}\" не найден!");
                 }
                 return false;
             }

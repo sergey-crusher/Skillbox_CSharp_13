@@ -34,6 +34,9 @@ namespace Lesson_13
         public static string CurrentClientINN;
         public static object CurrentAccountNumber;
 
+        /// <summary>
+        /// Экземпляр класса всплывающего сообщения
+        /// </summary>
         public static DisplayMessageClass displayMessage = new DisplayMessageClass() { Text = "Загрузка...", Visible = "Visible" };
 
         public MainWindow()
@@ -41,7 +44,9 @@ namespace Lesson_13
             if (clients == null)
             {
                 clients = new Clients();
-                clients.Notify += DisplayMessage;
+                // добавлем 
+                clients.Notify += DisplayMessage; // вывод сообщений в интерфейсе
+                clients.Notify += IO.Save2File; // сохрание истории изменений
             }
             if (clients.Count > 0)
             {
@@ -54,11 +59,21 @@ namespace Lesson_13
             clients.SaveChange();
         }
 
+        /// <summary>
+        /// Вызов страницы добавления клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuAddClient(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pAddClient.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Удаления клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuRemoveClient(object sender, RoutedEventArgs e)
         {
             if (dgClients.SelectedItems.Count > 0)
@@ -73,6 +88,11 @@ namespace Lesson_13
             }
         }
 
+        /// <summary>
+        /// Изменение данных клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgClients_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             CurrentClientINN = ((Client)e.Row.DataContext).INN;
@@ -80,6 +100,11 @@ namespace Lesson_13
             clients.SaveChange();
         }
 
+        /// <summary>
+        /// Изменение клиента (активного)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgClients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -94,11 +119,21 @@ namespace Lesson_13
             }
         }
 
+        /// <summary>
+        /// Добавление счёта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuAddAccount(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pAddAccount.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Удаление счёта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuRemoveAccount(object sender, RoutedEventArgs e)
         {
             Client client;
@@ -123,6 +158,11 @@ namespace Lesson_13
             }
         }
 
+        /// <summary>
+        /// Вызов страницы пополнения баланса
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuReplenishBalance(object sender, RoutedEventArgs e)
         {
             if (dgAccounts.SelectedItems.Count > 0)
@@ -136,21 +176,33 @@ namespace Lesson_13
             }
         }
 
+        /// <summary>
+        /// Вызов страницы перевода средств
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuTransfer(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pTransfer.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Кнопка справки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DisplayMessage("13 модуль скилбокса - Алешин С.А.");
+            MessageBox.Show("13 модуль скилбокса - Алешин С.А.");
         }
 
+        /// <summary>
+        /// Вывод всплывающего сообщения
+        /// </summary>
+        /// <param name="message">Тест сообщения</param>
         public void DisplayMessage(string message)
         {
             displayMessage.Text = message;
-            //TextBlockMessage.Visibility = Visibility.Visible;
-            //TextBlockMessage.Text = message;
         }
     }
 }

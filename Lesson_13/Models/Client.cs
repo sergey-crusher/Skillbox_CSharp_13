@@ -127,6 +127,11 @@ namespace Lesson_13.Models
             this.Accounts.Add((IAccount<Account>)account);
         }
 
+        /// <summary>
+        /// Удаление счёта
+        /// </summary>
+        /// <typeparam name="T">Тим счёта</typeparam>
+        /// <param name="account">Данные счёта</param>
         public void RemoveAccount<T>(T account) where T : Account
         {
             this.Accounts.Remove(account);
