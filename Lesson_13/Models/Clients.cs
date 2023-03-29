@@ -41,7 +41,7 @@ namespace Lesson_13.Models
         {
             // Считываем все данные клиентов (десериализуем их)
             var load = JsonConvert.DeserializeObject<ObservableCollection<ClientJSON>>(
-                File.ReadAllText("./clients_db.json"));
+                File.ReadAllText("../../../../clients_db.json"));
             // Добавляем клиентов из "базы"
             if (load.Count > 0)
             {
@@ -202,7 +202,7 @@ namespace Lesson_13.Models
         public void SaveChange()
         {
             string serialize = JsonConvert.SerializeObject(this);
-            File.WriteAllText("./clients_db.json", serialize);
+            File.WriteAllText("../../../../clients_db.json", serialize);
         }
     }
 }
